@@ -1,0 +1,6 @@
+BuildSystem
+obj
+
+# Editor temp files
+.*.swp
+.#*
