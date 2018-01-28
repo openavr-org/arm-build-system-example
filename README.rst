@@ -67,6 +67,19 @@ Detailed Usage
 
 **TODO:**
 
+There are essentially five ways you can use this project as your build system:
+
+* Use ``git-subtree`` to integrate this project into yours.
+* Use ``git-submodule`` to integrate this project into yours.
+* Use `google-repo <https://code.google.com/archive/p/git-repo/>`_. to manage
+  multiple git repositories via a manifest file.
+* Clone this project somewhere, copy the relevant files into your project
+  and commit them. It's up to you to manually track up stream changes if
+  you want to pull in updates. This is effectively what ``git-subtree`` does,
+  but it allows you to still track up stream changes for the build system.
+* Clone this project into yours as shown above. The downside here is that the
+  build system files are not a part of your project which is not desirable.
+
 Makefile User Variables
 -----------------------
 
@@ -79,3 +92,6 @@ Example Project
 An example project that uses this build system is available on GitHub:
 
 * https://github.com/openavr-org/arm-build-system-example
+
+The example project uses ``git-subtree`` to pull in the ``arm-build-system`` into
+the project.
