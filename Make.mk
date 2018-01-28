@@ -99,15 +99,15 @@ CXXFLAGS += -O2
 CXXFLAGS += --specs=nano.specs
 CXXFLAGS += --specs=nosys.specs
 
-AFLAGS  = $(WARNINGS)
-AFLAGS += $(AS_DEFS)
-AFLAGS += -x assembler-with-cpp
-AFLAGS += -Wa,-gdwarf-2
-AFLAGS += $(INC_DIRS)
-AFLAGS += $(MCPU)
-AFLAGS += $(MARCH)
-AFLAGS += --specs=nano.specs
-AFLAGS += --specs=nosys.specs
+ASFLAGS  = $(WARNINGS)
+ASFLAGS += $(AS_DEFS)
+ASFLAGS += -x assembler-with-cpp
+ASFLAGS += -Wa,-gdwarf-2
+ASFLAGS += $(INC_DIRS)
+ASFLAGS += $(MCPU)
+ASFLAGS += $(MARCH)
+ASFLAGS += --specs=nano.specs
+ASFLAGS += --specs=nosys.specs
 
 LDFLAGS  = -Wl,-Map,$@.map
 LDFLAGS += -Wl,-T$(LD_SCRIPT)
@@ -186,18 +186,18 @@ obj/%.o: %.cpp
 
 obj/%.o: %.s
 	-@echo "AS $@"
-	-$(QQ)$(CC) $(AFLAGS) -E $(GEN_DEPS) -o /dev/null $<
-	$(Q)$(CC) $(AFLAGS) -c -o $@ $<
+	-$(QQ)$(CC) $(ASFLAGS) -E $(GEN_DEPS) -o /dev/null $<
+	$(Q)$(CC) $(ASFLAGS) -c -o $@ $<
 
 obj/%.o: %.S
 	-@echo "AS $@"
-	-$(QQ)$(CC) $(AFLAGS) -E $(GEN_DEPS) -o /dev/null $<
-	$(Q)$(CC) $(AFLAGS) -c -o $@ $<
+	-$(QQ)$(CC) $(ASFLAGS) -E $(GEN_DEPS) -o /dev/null $<
+	$(Q)$(CC) $(ASFLAGS) -c -o $@ $<
 
 obj/%.o: %.asm
 	-@echo "AS $@"
-	-$(QQ)$(CC) $(AFLAGS) -E $(GEN_DEPS) -o /dev/null $<
-	$(Q)$(CC) $(AFLAGS) -c -o $@ $<
+	-$(QQ)$(CC) $(ASFLAGS) -E $(GEN_DEPS) -o /dev/null $<
+	$(Q)$(CC) $(ASFLAGS) -c -o $@ $<
 
 obj/$(PRG).elf: $(OBJS) $(DEP_LIBS)
 	-@echo "LD $@"
