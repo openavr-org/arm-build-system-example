@@ -86,6 +86,8 @@ CFLAGS += $(MCPU)
 CFLAGS += $(MARCH)
 CFLAGS += -O2
 CFLAGS += -fno-strict-aliasing
+CFLAGS += -fdata-sections
+CFLAGS += -ffunction-sections
 CFLAGS += --specs=nano.specs
 CFLAGS += --specs=nosys.specs
 
@@ -96,6 +98,8 @@ CXXFLAGS += $(INC_DIRS)
 CXXFLAGS += $(MCPU)
 CXXFLAGS += $(MARCH)
 CXXFLAGS += -O2
+CXXFLAGS += -fdata-sections
+CXXFLAGS += -ffunction-sections
 CXXFLAGS += --specs=nano.specs
 CXXFLAGS += --specs=nosys.specs
 
@@ -106,6 +110,8 @@ ASFLAGS += -Wa,-gdwarf-2
 ASFLAGS += $(INC_DIRS)
 ASFLAGS += $(MCPU)
 ASFLAGS += $(MARCH)
+ASFLAGS += -fdata-sections
+ASFLAGS += -ffunction-sections
 ASFLAGS += --specs=nano.specs
 ASFLAGS += --specs=nosys.specs
 
