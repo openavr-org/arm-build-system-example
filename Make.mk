@@ -26,13 +26,26 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# Get the PATH for directory containing 'Make.mk' allowing the user to name this
+# directory anything they want (e.g. 'Build', 'BuildSystem', 'Make', etc) and it
+# avoids having hard coded pathes relative to TOPDIR in this makefile fragment.
+MAKE_TOOLS_DIR :=  $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+
+# TOPDIR variable is set to the top directory of the application. There
+# may be multiple applications in a project which share a common MAKE_TOOLS_DIR
+# directory, but each will have a different TOPDIR.
+TOPDIR := $(abspath $(CURDIR))
+export TOPDIR
+
 # For debugging
 ifeq ($(DEBUG_MK),y)
+  $(info "MAKE_TOOLS_DIR: $(MAKE_TOOLS_DIR))
   $(info "TOPDIR: $(TOPDIR)")
 endif
 
-include $(TOPDIR)/Build/arches/$(TGT_ARCH).mk
+include $(MAKE_TOOLS_DIR)/arches/$(TGT_ARCH).mk
 
+# TODO: Move to $(TGT_ARCH).mk
 TOOLCHAIN   ?= arm-none-eabi-
 
 ADDR2LINE   := $(TOOLCHAIN)addr2line
@@ -178,7 +191,7 @@ clean:
 
 .PHONY: all clean
 
-include $(TOPDIR)/Build/Version.mk
+include $(MAKE_TOOLS_DIR)/Version.mk
 
 obj/%.o: %.c
 	-@echo "CC $@"

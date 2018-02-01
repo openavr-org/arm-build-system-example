@@ -57,7 +57,8 @@ following::
 
     $ make
 
-Most of the work should be in tweaking the ``Makefile`` for your needs.
+Most of the work should be in tweaking the ``Makefile`` for your needs and
+adding your source directories and files to the ``Sources.mk`` file.
 
 **TODO:** Write a GUI tool (python/tkinter script) to generate the
 ``Sources.mk`` and ``Makefile`` files.
@@ -86,6 +87,75 @@ Makefile User Variables
 **TODO:** Provide table of variables that can/must be set in ``Makefile`` and
 ``Sources.mk``.
 
+Single Application Project Layout
+---------------------------------
+
+Here is a typical layout for a project which builds a single application
+binary::
+
+    $ tree single-app-example/
+    single-app-example/
+    ├── BuildSystem
+    │   ├── Make.mk
+    │   └── Version.mk
+    ├── Makefile
+    ├── Sources.mk
+    └── src
+
+The application ``Makefile`` would need to contain the following
+boiler plate code near the beginning of the file::
+
+    PRG        ?= myproject
+    TGT_FAMILY ?= STM32F0xx
+    TGT_ARCH   ?= cortex-m0
+    TGT_DEFS   += -DSTM32F091xC
+
+    include BuildSystem/Make.mk
+
+Multi Application Project Layout
+--------------------------------
+
+Here is a typical layout for a project which builds multiple application
+binaries::
+
+    $ tree multi-app-example/
+    multi-app-example/
+    ├── BuildSystem
+    │   ├── Make.mk
+    │   └── Version.mk
+    ├── app1
+    │   ├── Makefile
+    │   ├── Sources.mk
+    │   └── src
+    └── app2
+        ├── Makefile
+        ├── Sources.mk
+        └── src
+
+The ``app1/Makefile`` would have the following boiler plate code at the
+beginning of the file::
+
+    PRG        ?= app1
+    TGT_FAMILY ?= STM32F0xx
+    TGT_ARCH   ?= cortex-m0
+    TGT_DEFS   += -DSTM32F091xC
+
+    include ../BuildSystem/Make.mk
+
+While the ``app2/Makefile`` would have the following boiler plate code at the
+beginning of the file::
+
+    PRG        ?= app2
+    TGT_FAMILY ?= STM32F0xx
+    TGT_ARCH   ?= cortex-m0
+    TGT_DEFS   += -DSTM32F091xC
+
+    include ../BuildSystem/Make.mk
+
+It is entirely reasonable that the ``TGT_*`` variables could be different for
+each application if the binaries are to be loaded onto completely different
+hardward with different processors.
+
 Example Project
 ===============
 
@@ -93,5 +163,5 @@ An example project that uses this build system is available on GitHub:
 
 * https://github.com/openavr-org/arm-build-system-example
 
-The example project uses ``git-subtree`` to pull in the ``arm-build-system`` into
+The example project uses ``git-subtree`` to pull the ``arm-build-system`` into
 the project.

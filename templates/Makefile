@@ -27,14 +27,6 @@
 #
 
 #
-# Must set TOPDIR so that the build system has a reference point
-# from which everything is accessed via relative paths.
-# TOPDIR is an absolute path.
-#
-TOPDIR = $(CURDIR)
-export TOPDIR
-
-#
 # Set the name of the project.
 #
 PRG ?= myproject
@@ -56,7 +48,7 @@ LD_SCRIPT  ?= STM32L052C8Tx_FLASH.ld
 #
 # Make.mk is where all the magic happens.
 #
-include $(TOPDIR)/BuildSystem/Make.mk
+include BuildSystem/Make.mk
 
 #
 # Optional: Add any rules you like (e.g. rules for flashing and debugging).
