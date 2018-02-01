@@ -28,11 +28,15 @@
 
 GIT_VERSION := $(shell git describe --always --long --dirty='-xx')
 
-.PHONYY: src/version.c src/version.c.tmp
+.PHONY: version.c version.c.tmp
+
+VERSION_SRC_DIR ?= $(TOPDIR)
+
+SRC_DIRS += $(VERSION_SRC_DIR)
 
 SRC += version.c
 
-Src/version.c.tmp:
+$(VERSION_SRC_DIR)/version.c.tmp:
 	@{ \
 		echo '/*'; \
 		echo ' * DO NOT EDIT! This is a generated file.'; \
@@ -40,7 +44,7 @@ Src/version.c.tmp:
 		echo 'const char *VERSION = "$(PRG)-$(GIT_VERSION)";'; \
 	} > $@
 
-Src/version.c: Src/version.c.tmp
+$(VERSION_SRC_DIR)/version.c: $(VERSION_SRC_DIR)/version.c.tmp
 	@if [ -f $@ ]; then \
 		if [ "$$(cat $@ | md5sum )" != "$$(cat $@.tmp | md5sum)" ]; then \
 			mv $@.tmp $@; \
@@ -50,7 +54,7 @@ Src/version.c: Src/version.c.tmp
 	fi
 	@rm -f $@.tmp
 
-obj/version.o: Src/version.c
+obj/version.o: $(VERSION_SRC_DIR)/version.c
 	-@echo "CC $@"
 	-$(QQ)$(CC) $(CFLAGS) -E $(GEN_DEPS) -o /dev/null $<
 	$(Q)$(CC) $(CFLAGS) -c -o $@ $<
