@@ -1,4 +1,5 @@
-BuildSystem
+# Generated files
+version.c
 obj
 
 # Editor temp files
