@@ -106,7 +106,6 @@ The application ``Makefile`` would need to contain the following
 boiler plate code near the beginning of the file::
 
     PRG        ?= myproject
-    TGT_FAMILY ?= STM32F0xx
     TGT_ARCH   ?= cortex-m0
     TGT_DEFS   += -DSTM32F091xC
 
@@ -136,7 +135,6 @@ The ``app1/Makefile`` would have the following boiler plate code at the
 beginning of the file::
 
     PRG        ?= app1
-    TGT_FAMILY ?= STM32F0xx
     TGT_ARCH   ?= cortex-m0
     TGT_DEFS   += -DSTM32F091xC
 
@@ -146,7 +144,6 @@ While the ``app2/Makefile`` would have the following boiler plate code at the
 beginning of the file::
 
     PRG        ?= app2
-    TGT_FAMILY ?= STM32F0xx
     TGT_ARCH   ?= cortex-m0
     TGT_DEFS   += -DSTM32F091xC
 
