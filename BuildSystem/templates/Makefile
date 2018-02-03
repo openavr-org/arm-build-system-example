@@ -27,26 +27,27 @@
 #
 
 #
-# Set the name of the project.
+# Set the project application name.
 #
-PRG ?= myproject
+PRG ?= app-name
 
 #
 # Specify the Target details.
-#  * Adjust appropriately for you target board.
+#  * Adjust appropriately for your target processor.
 #
-TGT_FAMILY ?= STM32L0xx
 TGT_ARCH   ?= cortex-m0plus
 
 TGT_DEFS   += -DSTM32L052xx
 
 #
 # Path to Linker Script
+#  * Adjust for your target processor.
 #
 LD_SCRIPT  ?= STM32L052C8Tx_FLASH.ld
 
 #
 # Make.mk is where all the magic happens.
+#  * Adjust path for your tastes.
 #
 include BuildSystem/Make.mk
 

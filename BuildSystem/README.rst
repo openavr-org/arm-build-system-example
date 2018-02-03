@@ -60,13 +60,8 @@ following::
 Most of the work should be in tweaking the ``Makefile`` for your needs and
 adding your source directories and files to the ``Sources.mk`` file.
 
-**TODO:** Write a GUI tool (python/tkinter script) to generate the
-``Sources.mk`` and ``Makefile`` files.
-
 Detailed Usage
 ==============
-
-**TODO:**
 
 There are essentially five ways you can use this project as your build system:
 
@@ -84,8 +79,58 @@ There are essentially five ways you can use this project as your build system:
 Makefile User Variables
 -----------------------
 
-**TODO:** Provide table of variables that can/must be set in ``Makefile`` and
-``Sources.mk``.
+The following table lists all of the variables used by the build system.
+
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| Variable          | Req'd | Set It In  | Set With  | Description                                        |
++===================+=======+============+===========+====================================================+
+| ``ARCH_WARNINGS`` | No    | Makefile   | ``+=``    | Flags to enable compiler warnins for ARCH          |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``ARCH_DEFS``     | No    | Makefile   | ``+=``    | ARCH specific ``-D`` settings                      |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``ARCH_AS_DEFS``  | No    | Makefile   | ``+=``    | ARCH asm specific ``-D`` settings                  |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``ARCH_INC_DIRS`` | No    | Makefile   | ``+=``    | ARCH specific include dirs                         |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``ARCH_SRC_DIRS`` | No    | Makefile   | ``+=``    | ARCH specific source dirs                          |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``MCPU``          | No    | Makefile   | ``+=``    | CPU specific compiler flags                        |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``MARCH``         | No    | Makefile   | ``+=``    | ARCH specific compiler flags                       |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``TOOLCHAIN``     | No    | Makefile   | ``:=``    | Defaults to ``arm-none-eabi-``                     |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``TGT_FAMILY``    | No    | Makefile   | ``+=``    | Specifies the target processor family              |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``TGT_ARCH``      | Yes   | Makefile   | ``+=``    | Causes include of ``$(TGT_ARCH).mk``               |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``TGT_DEFS``      | No    | Makefile   | ``+=``    | Sets ``-D`` values for target                      |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``OBJ_SECTIONS``  | No    | Makefile   | ``+=``    | Sections to extract from .elf into .bin file       |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``INC_DIRS``      | Yes   | Sources.mk | ``+=``    | List of include dirs, each with ``-I`` prefix      |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``SRC_DIRS``      | Yes   | Sources.mk | ``+=``    | List of dirs to search for source files            |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``SRC``           | Yes   | Sources.mk | ``+=``    | List of source files (excluding library files)     |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``LIB_DIRS``      | No    | Sources.mk | ``+=``    | List of dirs to search for libs, each with ``-L``  |
+|                   |       |            |           | prefix                                             |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``ARCHIVES``      | No    | Sources.mk | ``+=``    | List of names of libraries to build                |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``LIB_SRC_<lib>`` | No    | Sources.mk | ``+=``    | Source files for lib<name>.a                       |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``ASFLAGS``       | No    | Makefile   | ``+=``    | Assembler flags                                    |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``CFLAGS``        | No    | Makefile   | ``+=``    | C compiler flags                                   |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``CXXFLAGS``      | No    | Makefile   | ``+=``    | C++ compiler flags                                 |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``LDFLAGS``       | No    | Makefile   | ``+=``    | Linker flags                                       |
++-------------------+-------+------------+-----------+----------------------------------------------------+
+| ``PRG``           | Yes   | Makefile   | ``?=/:=`` | Provides the base name of the program file         |
++-------------------+-------+------------+-----------+----------------------------------------------------+
 
 Single Application Project Layout
 ---------------------------------
@@ -106,7 +151,6 @@ The application ``Makefile`` would need to contain the following
 boiler plate code near the beginning of the file::
 
     PRG        ?= myproject
-    TGT_FAMILY ?= STM32F0xx
     TGT_ARCH   ?= cortex-m0
     TGT_DEFS   += -DSTM32F091xC
 
@@ -136,7 +180,6 @@ The ``app1/Makefile`` would have the following boiler plate code at the
 beginning of the file::
 
     PRG        ?= app1
-    TGT_FAMILY ?= STM32F0xx
     TGT_ARCH   ?= cortex-m0
     TGT_DEFS   += -DSTM32F091xC
 
@@ -146,7 +189,6 @@ While the ``app2/Makefile`` would have the following boiler plate code at the
 beginning of the file::
 
     PRG        ?= app2
-    TGT_FAMILY ?= STM32F0xx
     TGT_ARCH   ?= cortex-m0
     TGT_DEFS   += -DSTM32F091xC
 
