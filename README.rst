@@ -96,13 +96,13 @@ The following table lists all of the variables used by the build system.
 +-------------------+-------+------------+-----------+----------------------------------------------------+
 | ``MCPU``          | No    | Makefile   | ``+=``    | CPU specific compiler flags                        |
 +-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``MARCH``         | No    | Makefile   | ``+=``    | ARCH specific compiler flags                       |
+| ``MARCH``         | No    | Makefile   | ``+=``    | ARM arch compiler flags (see ``-march=`` option at    |
+|                   |       |            |           | https://gcc.gnu.org/onlinedocs/gcc/ARM-Options.html). |
+|                   |       |            |           | Left empty by default.                                |
 +-------------------+-------+------------+-----------+----------------------------------------------------+
 | ``TOOLCHAIN``     | No    | Makefile   | ``:=``    | Defaults to ``arm-none-eabi-``                     |
 +-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``TGT_FAMILY``    | No    | Makefile   | ``+=``    | Specifies the target processor family              |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``TGT_ARCH``      | Yes   | Makefile   | ``+=``    | Causes include of ``$(TGT_ARCH).mk``               |
+| ``TGT_ARCH``      | Yes   | Makefile   | ``+=``    | Causes inclusion of ``arches/$(TGT_ARCH).mk``      |
 +-------------------+-------+------------+-----------+----------------------------------------------------+
 | ``TGT_DEFS``      | No    | Makefile   | ``+=``    | Sets ``-D`` values for target                      |
 +-------------------+-------+------------+-----------+----------------------------------------------------+
