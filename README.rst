@@ -31,8 +31,8 @@ which pre-built binaries for multiple platforms can be downloaded from:
 
 * https://developer.arm.com/open-source/gnu-toolchain/gnu-rm
 
-The author uses Ubuntu based systems for development and installs the toolchain
-via the PPA:
+The author uses Ubuntu based systems for development and installs the tool
+chain via the PPA:
 
 * https://launchpad.net/~team-gcc-arm-embedded/+archive/ubuntu/ppa
 
@@ -67,7 +67,7 @@ There are essentially five ways you can use this project as your build system:
 
 * Use ``git-subtree`` to integrate this project into yours.
 * Use ``git-submodule`` to integrate this project into yours.
-* Use `google-repo <https://code.google.com/archive/p/git-repo/>`_. to manage
+* Use `Google Repo <https://code.google.com/archive/p/git-repo/>`_ to manage
   multiple git repositories via a manifest file.
 * Clone this project somewhere, copy the relevant files into your project
   and commit them. It's up to you to manually track up stream changes if
@@ -84,7 +84,7 @@ The following table lists all of the variables used by the build system.
 +-------------------+-------+------------+-----------+----------------------------------------------------+
 | Variable          | Req'd | Set It In  | Set With  | Description                                        |
 +===================+=======+============+===========+====================================================+
-| ``ARCH_WARNINGS`` | No    | Makefile   | ``+=``    | Flags to enable compiler warnins for ARCH          |
+| ``ARCH_WARNINGS`` | No    | Makefile   | ``+=``    | Flags to enable compiler warnings for ARCH         |
 +-------------------+-------+------------+-----------+----------------------------------------------------+
 | ``ARCH_DEFS``     | No    | Makefile   | ``+=``    | ARCH specific ``-D`` settings                      |
 +-------------------+-------+------------+-----------+----------------------------------------------------+
@@ -196,7 +196,7 @@ beginning of the file::
 
 It is entirely reasonable that the ``TGT_*`` variables could be different for
 each application if the binaries are to be loaded onto completely different
-hardward with different processors.
+hardware with different processors.
 
 Example Project
 ===============
@@ -205,5 +205,5 @@ An example project that uses this build system is available on GitHub:
 
 * https://github.com/openavr-org/arm-build-system-example
 
-The example project uses ``git-subtree`` to pull the ``arm-build-system`` into
-the project.
+The example project uses ``git-subtree`` to pull the ``arm-build-system``
+sub-project into the project.
