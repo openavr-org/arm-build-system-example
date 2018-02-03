@@ -26,30 +26,10 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-#
-# Set the name of the project.
-#
-PRG ?= nucleo-F091RC
+PRG        ?= nucleo-F091RC
 
-#
-# Specify the Target details.
-#  * Adjust appropriately for you target board.
-#
-TGT_FAMILY ?= STM32F0xx
 TGT_ARCH   ?= cortex-m0
-
 TGT_DEFS   += -DSTM32F091xC
-
-#
-# Path to Linker Script
-#
 LD_SCRIPT  ?= STM32F091RCTx_FLASH.ld
 
-#
-# Make.mk is where all the magic happens.
-#
 include ../BuildSystem/Make.mk
-
-#
-# Optional: Add any rules you like (e.g. rules for flashing and debugging).
-#
