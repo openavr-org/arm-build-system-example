@@ -11,9 +11,9 @@ Project Design Requirements
 
 * Simple to set up a project.
 * Simple to add files to a project.
-* Parallel builds by default.
 * Does not use recursive make.
 * Automatic and robust dependency generation.
+* Parallel builds with ``make -j N`` will not break the build.
 * Support for putting source into (static) library archives and automatic
   linking with those archives.
 * Automatic embedding of version into binary generated from GIT tags.
