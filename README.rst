@@ -60,13 +60,8 @@ following::
 Most of the work should be in tweaking the ``Makefile`` for your needs and
 adding your source directories and files to the ``Sources.mk`` file.
 
-**TODO:** Write a GUI tool (python/tkinter script) to generate the
-``Sources.mk`` and ``Makefile`` files.
-
 Detailed Usage
 ==============
-
-**TODO:**
 
 There are essentially five ways you can use this project as your build system:
 
