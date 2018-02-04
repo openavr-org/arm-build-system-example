@@ -11,9 +11,9 @@ Project Design Requirements
 
 * Simple to set up a project.
 * Simple to add files to a project.
-* Parallel builds by default.
 * Does not use recursive make.
 * Automatic and robust dependency generation.
+* Parallel builds with ``make -j N`` will not break the build.
 * Support for putting source into (static) library archives and automatic
   linking with those archives.
 * Automatic embedding of version into binary generated from GIT tags.
@@ -31,8 +31,8 @@ which pre-built binaries for multiple platforms can be downloaded from:
 
 * https://developer.arm.com/open-source/gnu-toolchain/gnu-rm
 
-The author uses Ubuntu based systems for development and installs the toolchain
-via the PPA:
+The author uses Ubuntu based systems for development and installs the tool
+chain via the PPA:
 
 * https://launchpad.net/~team-gcc-arm-embedded/+archive/ubuntu/ppa
 
@@ -67,7 +67,7 @@ There are essentially five ways you can use this project as your build system:
 
 * Use ``git-subtree`` to integrate this project into yours.
 * Use ``git-submodule`` to integrate this project into yours.
-* Use `google-repo <https://code.google.com/archive/p/git-repo/>`_. to manage
+* Use `Google Repo <https://code.google.com/archive/p/git-repo/>`_ to manage
   multiple git repositories via a manifest file.
 * Clone this project somewhere, copy the relevant files into your project
   and commit them. It's up to you to manually track up stream changes if
@@ -81,56 +81,56 @@ Makefile User Variables
 
 The following table lists all of the variables used by the build system.
 
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| Variable          | Req'd | Set It In  | Set With  | Description                                        |
-+===================+=======+============+===========+====================================================+
-| ``ARCH_WARNINGS`` | No    | Makefile   | ``+=``    | Flags to enable compiler warnins for ARCH          |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``ARCH_DEFS``     | No    | Makefile   | ``+=``    | ARCH specific ``-D`` settings                      |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``ARCH_AS_DEFS``  | No    | Makefile   | ``+=``    | ARCH asm specific ``-D`` settings                  |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``ARCH_INC_DIRS`` | No    | Makefile   | ``+=``    | ARCH specific include dirs                         |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``ARCH_SRC_DIRS`` | No    | Makefile   | ``+=``    | ARCH specific source dirs                          |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``MCPU``          | No    | Makefile   | ``+=``    | CPU specific compiler flags                        |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``MARCH``         | No    | Makefile   | ``+=``    | ARCH specific compiler flags                       |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``TOOLCHAIN``     | No    | Makefile   | ``:=``    | Defaults to ``arm-none-eabi-``                     |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``TGT_FAMILY``    | No    | Makefile   | ``+=``    | Specifies the target processor family              |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``TGT_ARCH``      | Yes   | Makefile   | ``+=``    | Causes include of ``$(TGT_ARCH).mk``               |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``TGT_DEFS``      | No    | Makefile   | ``+=``    | Sets ``-D`` values for target                      |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``OBJ_SECTIONS``  | No    | Makefile   | ``+=``    | Sections to extract from .elf into .bin file       |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``INC_DIRS``      | Yes   | Sources.mk | ``+=``    | List of include dirs, each with ``-I`` prefix      |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``SRC_DIRS``      | Yes   | Sources.mk | ``+=``    | List of dirs to search for source files            |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``SRC``           | Yes   | Sources.mk | ``+=``    | List of source files (excluding library files)     |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``LIB_DIRS``      | No    | Sources.mk | ``+=``    | List of dirs to search for libs, each with ``-L``  |
-|                   |       |            |           | prefix                                             |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``ARCHIVES``      | No    | Sources.mk | ``+=``    | List of names of libraries to build                |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``LIB_SRC_<lib>`` | No    | Sources.mk | ``+=``    | Source files for lib<name>.a                       |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``ASFLAGS``       | No    | Makefile   | ``+=``    | Assembler flags                                    |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``CFLAGS``        | No    | Makefile   | ``+=``    | C compiler flags                                   |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``CXXFLAGS``      | No    | Makefile   | ``+=``    | C++ compiler flags                                 |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``LDFLAGS``       | No    | Makefile   | ``+=``    | Linker flags                                       |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
-| ``PRG``           | Yes   | Makefile   | ``?=/:=`` | Provides the base name of the program file         |
-+-------------------+-------+------------+-----------+----------------------------------------------------+
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| Variable          | Req'd | Set It In  | Set With  | Description                                           |
++===================+=======+============+===========+=======================================================+
+| ``ARCH_WARNINGS`` | No    | Makefile   | ``+=``    | Flags to enable compiler warnings for ARCH            |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``ARCH_DEFS``     | No    | Makefile   | ``+=``    | ARCH specific ``-D`` settings                         |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``ARCH_AS_DEFS``  | No    | Makefile   | ``+=``    | ARCH asm specific ``-D`` settings                     |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``ARCH_INC_DIRS`` | No    | Makefile   | ``+=``    | ARCH specific include dirs                            |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``ARCH_SRC_DIRS`` | No    | Makefile   | ``+=``    | ARCH specific source dirs                             |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``MCPU``          | No    | Makefile   | ``+=``    | CPU specific compiler flags                           |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``MARCH``         | No    | Makefile   | ``+=``    | ARM arch compiler flags (see ``-march=`` option at    |
+|                   |       |            |           | https://gcc.gnu.org/onlinedocs/gcc/ARM-Options.html). |
+|                   |       |            |           | Left empty by default.                                |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``TOOLCHAIN``     | No    | Makefile   | ``:=``    | Defaults to ``arm-none-eabi-``                        |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``TGT_ARCH``      | Yes   | Makefile   | ``+=``    | Causes inclusion of ``arches/$(TGT_ARCH).mk``         |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``TGT_DEFS``      | No    | Makefile   | ``+=``    | Sets ``-D`` values for target                         |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``OBJ_SECTIONS``  | No    | Makefile   | ``+=``    | Sections to extract from .elf into .bin file          |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``INC_DIRS``      | Yes   | Sources.mk | ``+=``    | List of include dirs, each with ``-I`` prefix         |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``SRC_DIRS``      | Yes   | Sources.mk | ``+=``    | List of dirs to search for source files               |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``SRC``           | Yes   | Sources.mk | ``+=``    | List of source files (excluding library files)        |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``LIB_DIRS``      | No    | Sources.mk | ``+=``    | List of dirs to search for libs, each with ``-L``     |
+|                   |       |            |           | prefix                                                |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``ARCHIVES``      | No    | Sources.mk | ``+=``    | List of names of libraries to build                   |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``LIB_SRC_<lib>`` | No    | Sources.mk | ``+=``    | Source files for lib<name>.a                          |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``ASFLAGS``       | No    | Makefile   | ``+=``    | Assembler flags                                       |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``CFLAGS``        | No    | Makefile   | ``+=``    | C compiler flags                                      |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``CXXFLAGS``      | No    | Makefile   | ``+=``    | C++ compiler flags                                    |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``LDFLAGS``       | No    | Makefile   | ``+=``    | Linker flags                                          |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
+| ``PRG``           | Yes   | Makefile   | ``?=/:=`` | Provides the base name of the program file            |
++-------------------+-------+------------+-----------+-------------------------------------------------------+
 
 Single Application Project Layout
 ---------------------------------
@@ -196,7 +196,7 @@ beginning of the file::
 
 It is entirely reasonable that the ``TGT_*`` variables could be different for
 each application if the binaries are to be loaded onto completely different
-hardward with different processors.
+hardware with different processors.
 
 Example Project
 ===============
@@ -205,5 +205,5 @@ An example project that uses this build system is available on GitHub:
 
 * https://github.com/openavr-org/arm-build-system-example
 
-The example project uses ``git-subtree`` to pull the ``arm-build-system`` into
-the project.
+The example project uses ``git-subtree`` to pull the ``arm-build-system``
+sub-project into the project.

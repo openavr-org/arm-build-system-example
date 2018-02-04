@@ -186,7 +186,6 @@ LIBS += $(ARCHIVES:%=-l%)
 all: obj/$(PRG).lst obj/$(PRG).bin obj/$(PRG).hex
 
 clean:
-	rm -f $(PRG).elf* $(PRG).lst $(PRG).bin
 	rm -rf obj
 
 .PHONY: all clean
