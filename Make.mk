@@ -169,7 +169,7 @@ OBJ_SECTIONS += -j .fini_array
 OBJ_SECTIONS += -j .ARM.extab
 OBJ_SECTIONS += -j .ARM.exidx
 
-GEN_DEPS = -Wp,-M,-MP,-MT,$(*F).o,-MF,obj/.deps/$(@F).d
+GEN_DEPS = -Wp,-M,-MP,-MT,obj/$(*F).o,-MF,obj/.deps/$(@F).d
 
 space := $(empty) $(empty)
 
