@@ -169,7 +169,7 @@ OBJ_SECTIONS += -j .fini_array
 OBJ_SECTIONS += -j .ARM.extab
 OBJ_SECTIONS += -j .ARM.exidx
 
-GEN_DEPS = -Wp,-M,-MP,-MT,$(*F).o,-MF,obj/.deps/$(@F).d
+GEN_DEPS = -Wp,-M,-MP,-MT,obj/$(*F).o,-MF,obj/.deps/$(@F).d
 
 space := $(empty) $(empty)
 
@@ -179,6 +179,7 @@ OBJS  = $(filter %.o,$(SRC:%.s=obj/%.o))
 OBJS += $(filter %.o,$(SRC:%.S=obj/%.o))
 OBJS += $(filter %.o,$(SRC:%.c=obj/%.o))
 OBJS += $(filter %.o,$(SRC:%.cpp=obj/%.o))
+OBJS += $(filter %.o,$(SRC:%.cc=obj/%.o))
 
 DEP_LIBS = $(ARCHIVES:%=obj/lib%.a)
 LIBS += $(ARCHIVES:%=-l%)
@@ -198,6 +199,11 @@ obj/%.o: %.c
 	$(Q)$(CC) $(CFLAGS) -c -o $@ $<
 
 obj/%.o: %.cpp
+	-@echo "CXX $@"
+	-$(QQ)$(CXX) $(CXXFLAGS) -E $(GEN_DEPS) -o /dev/null $<
+	$(Q)$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+obj/%.o: %.cc
 	-@echo "CXX $@"
 	-$(QQ)$(CXX) $(CXXFLAGS) -E $(GEN_DEPS) -o /dev/null $<
 	$(Q)$(CXX) $(CXXFLAGS) -c -o $@ $<
@@ -254,6 +260,7 @@ define GEN_ARCHIVE_RULES_TEMPLATE
   OBJS_$(1) += $(filter %.o,$(LIB_SRC_$(1):%.S=obj/%.o))
   OBJS_$(1) += $(filter %.o,$(LIB_SRC_$(1):%.c=obj/%.o))
   OBJS_$(1) += $(filter %.o,$(LIB_SRC_$(1):%.cpp=obj/%.o))
+  OBJS_$(1) += $(filter %.o,$(LIB_SRC_$(1):%.cc=obj/%.o))
 
   obj/lib$(1).a: $$(OBJS_$(1))
 	-@echo "AR $$@"
